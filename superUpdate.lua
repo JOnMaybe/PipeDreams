@@ -2,9 +2,7 @@
 -- Automatically downloads ComputerCraft programs to a computer
 
 urls = {
-    {"pipe.lua",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"},
     {"update.lua",       "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"}
-    
 
 }
 

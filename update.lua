@@ -1,3 +1,4 @@
+local args = {...}
 -- Update script
 -- Automatically downloads ComputerCraft programs to a computer
 
@@ -6,6 +7,10 @@ urls = {
     {"superUpdate.lua",  "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/superUpdate.lua"}
 
 }
+
+if #args == 1 then
+  table.insert(urls, #urls + 1, {"startup.lua", "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/startup.lua"})
+end
 
 function download(name, url)
   print("Updating " .. name)

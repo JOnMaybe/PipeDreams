@@ -25,7 +25,7 @@ function download(name, url, pos)
     file.close()
   else
     file = fs.open(name, "w")
-    if name ~= "startup.lua" then
+    if pos ~= #urls and #args == 1 then
       file.write(data)
     else 
       print ("goofy")

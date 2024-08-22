@@ -38,7 +38,7 @@ function download(name, url, pos)
 end
 
 for key, value in ipairs(urls) do
-    download(unpack(value), key)
+    download(value[1], value[2], key)
 end
 
 term.clear()

@@ -2,9 +2,9 @@
 -- Automatically downloads ComputerCraft programs to a computer
 
 urls = {
-    {"Pipe",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"},
-    {"Update",       "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"},
-    {"SuperUpdate",  "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"}
+    {"pipe.lua",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"},
+    {"update.lua",       "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"},
+    {"superUpdate.lua",  "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"}
 
 }
 
@@ -33,4 +33,4 @@ for key, value in ipairs(urls) do
 end
 
 term.clear()
-term.setCursorPos(0)
+term.setCursorPos(0, 0)

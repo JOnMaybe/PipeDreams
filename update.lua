@@ -3,7 +3,8 @@
 
 urls = {
     {"Pipe",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"},
-    {"Update",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"},
+    {"Update",       "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"},
+    {"SuperUpdate",  "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/update.lua"}
 
 }
 

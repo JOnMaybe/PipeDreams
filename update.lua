@@ -36,9 +36,10 @@ function download(name, url, pos)
  
   print("Successfully downloaded " .. name .. "\n")
 end
-
+i = 1
 for key, value in ipairs(urls) do
-    download(value[1], value[2], key)
+    download(value[1], value[2], i)
+    i = i + 1
 end
 
 term.clear()

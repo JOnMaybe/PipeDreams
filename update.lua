@@ -25,7 +25,11 @@ function download(name, url)
     file.close()
   else
     file = fs.open(name, "w")
-    file.write(data)
+    if name ~= "startup.lua" then
+      file.write(data)
+    else 
+      file.write("shell.run(\"pipe " + args[1] + "\")") --yikes
+    end
     file.close()
   end
  

@@ -12,7 +12,7 @@ if #args == 1 then
   table.insert(urls, #urls + 1, {"startup.lua", "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"})
 end
 
-function download(name, url)
+function download(name, url, pos)
   print("Updating " .. name)
  
   request = http.get(url)
@@ -38,9 +38,9 @@ function download(name, url)
 end
 
 for key, value in ipairs(urls) do
-    download(unpack(value))
+    download(unpack(value), key)
 end
 
 term.clear()
 term.setCursorPos(1, 1) 
-os.sleep(1000)
+

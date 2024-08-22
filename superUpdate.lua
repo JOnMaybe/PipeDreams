@@ -33,4 +33,4 @@ for key, value in ipairs(urls) do
 end
 
 term.clear()
-term.setCursorPos(0, 0)
+term.setCursorPos(1, 1)

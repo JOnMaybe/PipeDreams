@@ -9,7 +9,7 @@ urls = {
 }
 
 if #args == 1 then
-  table.insert(urls, #urls + 1, {"startup.lua", "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/startup.lua"})
+  table.insert(urls, #urls + 1, {"startup.lua", "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"})
 end
 
 function download(name, url)
@@ -28,6 +28,7 @@ function download(name, url)
     if name ~= "startup.lua" then
       file.write(data)
     else 
+      print ("goofy")
       file.write("shell.run(\"pipe " + args[1] + "\")") --yikes
     end
     file.close()
@@ -42,3 +43,4 @@ end
 
 term.clear()
 term.setCursorPos(1, 1) 
+os.sleep(1000)

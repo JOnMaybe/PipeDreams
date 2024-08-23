@@ -25,12 +25,10 @@ function download(name, url, pos)
     file.close()
   else
     file = fs.open(name, "w")
-    if pos ~= #urls or #args == 0 then
-      file.write(data)
-    else 
-      print ("goofy")
-      file.write("shell.run(\"pipe " + args[1] + "\")") --yikes
+    if pos == #urls and #args >= 1 then
+      data = "hi"
     end
+    file.write(data)
     file.close()
   end
  

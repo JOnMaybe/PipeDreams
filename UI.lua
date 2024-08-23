@@ -68,6 +68,9 @@ while true do
         for _, key in ipairs(blackKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
             if x >= keyX and x < keyX + blackKeyWidth and y >= startY and y < startY + blackKeyHeight then
+                if key.label == "A#" then
+                    octave = octave + 1
+                end
                 msg = msg .. key.label .. octave+1 .. ","
                 blackKeyPressed = true
                 break
@@ -83,6 +86,9 @@ while true do
         for _, key in ipairs(whiteKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + 1
             if x >= keyX and x < keyX + whiteKeyWidth and y >= startY and y < startY + keyHeight then
+                if key.label == "A" or key.label == "B" then
+                    octave = octave + 1
+                end
                 msg = msg .. key.label .. octave+1 .. ","
             end
         end

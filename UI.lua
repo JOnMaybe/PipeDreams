@@ -9,6 +9,7 @@ local screenWidth, screenHeight = term.getSize()
 local whiteKeyWidth = math.floor(screenWidth / 7)  -- 7 white keys per octave
 local blackKeyWidth = math.floor(whiteKeyWidth * 0.6)
 local keyHeight = math.floor(screenHeight / 4)     -- 4 octaves
+local blackKeyHeight = math.floor(keyHeight * 0.6)
 
 -- Define the white and black keys for an octave, starting with C
 local whiteKeys = {
@@ -18,8 +19,8 @@ local whiteKeys = {
 }
 
 local blackKeys = {
-    {label = "C#", xOffset = 0.75}, {label = "D#", xOffset = 1.75},
-    {label = "F#", xOffset = 3.75}, {label = "G#", xOffset = 4.75}, {label = "A#", xOffset = 5.75}
+    {label = "C#", xOffset = 0.5}, {label = "D#", xOffset = 1.5},
+    {label = "F#", xOffset = 3.5}, {label = "G#", xOffset = 4.5}, {label = "A#", xOffset = 5.5}
 }
 
 -- Function to draw an octave
@@ -37,10 +38,10 @@ local function drawOctave(startY)
 
     -- Draw black keys
     for _, key in ipairs(blackKeys) do
-        local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor((whiteKeyWidth - blackKeyWidth) / 2)
+        local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
         -- Draw key body
         term.setBackgroundColor(colors.gray)
-        for i = 0, math.floor(keyHeight * 0.6) - 1 do
+        for i = 0, blackKeyHeight - 1 do
             term.setCursorPos(keyX, startY + i)
             term.write(string.rep(" ", blackKeyWidth))  -- adjust width
         end
@@ -58,20 +59,27 @@ while true do
     local event, button, x, y = os.pullEvent("mouse_click")
 
     -- Detect key press for all four octaves
+    local blackKeyPressed = false
     for octave = 1, 4 do
         local startY = (octave - 1) * keyHeight + 1
+        
+        -- Check black keys first
+        for _, key in ipairs(blackKeys) do
+            local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
+            if x >= keyX and x < keyX + blackKeyWidth and y >= startY and y < startY + blackKeyHeight then
+                print("Played note: " .. key.label .. " in octave " .. octave)
+                blackKeyPressed = true
+                break
+            end
+        end
+        
+        -- If a black key was pressed, skip checking the white keys
+        if blackKeyPressed then break end
+
         -- Check white keys
         for _, key in ipairs(whiteKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + 1
             if x >= keyX and x < keyX + whiteKeyWidth and y >= startY and y < startY + keyHeight then
-                print("Played note: " .. key.label .. " in octave " .. octave)
-            end
-        end
-
-        -- Check black keys
-        for _, key in ipairs(blackKeys) do
-            local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor((whiteKeyWidth - blackKeyWidth) / 2)
-            if x >= keyX and x < keyX + blackKeyWidth and y >= startY and y < startY + math.floor(keyHeight * 0.6) then
                 print("Played note: " .. key.label .. " in octave " .. octave)
             end
         end

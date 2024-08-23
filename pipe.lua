@@ -17,7 +17,7 @@ function mysplit(inputstr, sep)
 end
 
 while true do
-   local id, msg = rednet.receive(nil, 5)
+   local id, msg = rednet.receive()
    if msg ~= nil and msg ~= "" then 
         local notesInMsg = mysplit(msg, ",")
             local playing = false

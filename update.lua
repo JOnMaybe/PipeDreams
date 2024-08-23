@@ -9,10 +9,22 @@ urls = {
 }
 
 if #args == 1 then
-  table.insert(urls, #urls + 1, {"startup.lua", "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"})
+  local data = "shell.run(\"pipe " + args[1] + "\")"
+  local name = "startup.lua"
+  if fs.exists(name) then
+    fs.delete(name)
+    file = fs.open(name, "w")
+    file.write(data)
+    file.close()
+  else
+    file = fs.open(name, "w")
+    file.write(data)
+    file.close()
+  end
+  --table.insert(urls, #urls + 1, {"startup.lua", "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"})
 end
 
-function download(name, url, pos)
+function download(name, url)
   print("Updating " .. name)
  
   request = http.get(url)
@@ -25,9 +37,6 @@ function download(name, url, pos)
     file.close()
   else
     file = fs.open(name, "w")
-    if pos == #urls and #args >= 1 then
-      data = "hi"
-    end
     file.write(data)
     file.close()
   end
@@ -36,7 +45,7 @@ function download(name, url, pos)
 end
 i = 1
 for key, value in ipairs(urls) do
-    download(value[1], value[2], i)
+    download(unpack(value))
     i = i + 1
 end
 

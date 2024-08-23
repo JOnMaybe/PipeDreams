@@ -1,9 +1,9 @@
-local args = {...}
 local modem = peripheral.find("modem")
  
-local myNote = args[1]
+local myNote = "F#3"
  
 modem.open(65535)
+rednet.open("front")
  
 function mysplit(inputstr, sep)
     if sep == nil then
@@ -15,10 +15,10 @@ function mysplit(inputstr, sep)
     end
     return t
 end
-
+ 
 while true do
    local id, msg = rednet.receive()
-   if msg ~= nil and msg ~= "" then 
+   --if msg ~= nil and msg ~= "" then 
         local notesInMsg = mysplit(msg, ",")
             local playing = false
         for _,v in pairs(notesInMsg) do
@@ -29,5 +29,5 @@ while true do
         end
         redstone.setOutput("top", playing);
         
-    end
+    --end
 end

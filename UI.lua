@@ -73,8 +73,9 @@ while true do
         for _, key in ipairs(blackKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
             if x >= keyX and x < keyX + blackKeyWidth and y >= startY and y < startY + math.floor(keyHeight * 0.6) then
-                print("Played note: " .. key.label .. " in octave " .. octave)
+                msg = msg..","..key.label .. octave+1
             end
         end
     end
+    rednet.broadcast(msg)
 end

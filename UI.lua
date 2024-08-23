@@ -1,7 +1,7 @@
 -- Set the background to blue
 term.setBackgroundColor(colors.blue)
 term.clear()
-
+rednet.open("back")
 -- Get screen dimensions
 local screenWidth, screenHeight = term.getSize()
 
@@ -57,6 +57,7 @@ end
 -- Handle mouse input
 while true do
     local event, button, x, y = os.pullEvent("mouse_click")
+    local msg = ""
 
     -- Detect key press for all four octaves
     local blackKeyPressed = false
@@ -67,21 +68,25 @@ while true do
         for _, key in ipairs(blackKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
             if x >= keyX and x < keyX + blackKeyWidth and y >= startY and y < startY + blackKeyHeight then
-                print("Played note: " .. key.label .. " in octave " .. octave)
+                msg = msg .. key.label .. octave+1 .. ","
                 blackKeyPressed = true
                 break
             end
         end
         
         -- If a black key was pressed, skip checking the white keys
-        if blackKeyPressed then break end
+        if blackKeyPressed then 
+        rednet.broadcast(msg)
+            break end
 
         -- Check white keys
         for _, key in ipairs(whiteKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + 1
             if x >= keyX and x < keyX + whiteKeyWidth and y >= startY and y < startY + keyHeight then
-                print("Played note: " .. key.label .. " in octave " .. octave)
+                msg = msg .. key.label .. octave+1 .. ","
             end
         end
     end
+    rednet.broadcast(msg)
+
 end

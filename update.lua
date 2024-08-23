@@ -9,7 +9,7 @@ urls = {
 }
 
 if #args == 1 then
-  local data = "shell.run(\"pipe " + args[1] + "\")"
+  local data = "shell.run(\"pipe " .. args[1] .. "\")"
   local name = "startup.lua"
   if fs.exists(name) then
     fs.delete(name)

@@ -1,7 +1,9 @@
+local args = {...}
 local modem = peripheral.find("modem")
  
-local myNote = "F#3"
- 
+local myNote = ""
+myNote = args[1]
+ print(myNote)
 modem.open(65535)
 rednet.open("front")
  

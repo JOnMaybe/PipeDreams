@@ -1,7 +1,7 @@
 -- Set the background to blue
 term.setBackgroundColor(colors.blue)
 term.clear()
-rednet.open("back")
+
 -- Get screen dimensions
 local screenWidth, screenHeight = term.getSize()
 
@@ -18,8 +18,8 @@ local whiteKeys = {
 }
 
 local blackKeys = {
-    {label = "C#", xOffset = 0.5}, {label = "D#", xOffset = 1.5},
-    {label = "F#", xOffset = 3.5}, {label = "G#", xOffset = 4.5}, {label = "A#", xOffset = 5.5}
+    {label = "C#", xOffset = 0.75}, {label = "D#", xOffset = 1.75},
+    {label = "F#", xOffset = 3.75}, {label = "G#", xOffset = 4.75}, {label = "A#", xOffset = 5.75}
 }
 
 -- Function to draw an octave
@@ -37,7 +37,7 @@ local function drawOctave(startY)
 
     -- Draw black keys
     for _, key in ipairs(blackKeys) do
-        local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
+        local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor((whiteKeyWidth - blackKeyWidth) / 2)
         -- Draw key body
         term.setBackgroundColor(colors.gray)
         for i = 0, math.floor(keyHeight * 0.6) - 1 do
@@ -56,7 +56,6 @@ end
 -- Handle mouse input
 while true do
     local event, button, x, y = os.pullEvent("mouse_click")
-    local msg = ""
 
     -- Detect key press for all four octaves
     for octave = 1, 4 do
@@ -65,17 +64,16 @@ while true do
         for _, key in ipairs(whiteKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + 1
             if x >= keyX and x < keyX + whiteKeyWidth and y >= startY and y < startY + keyHeight then
-                msg = msg..","..key.label .. octave+1
+                print("Played note: " .. key.label .. " in octave " .. octave)
             end
         end
 
         -- Check black keys
         for _, key in ipairs(blackKeys) do
-            local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor(whiteKeyWidth * 0.7)
+            local keyX = math.floor(key.xOffset * whiteKeyWidth) + math.floor((whiteKeyWidth - blackKeyWidth) / 2)
             if x >= keyX and x < keyX + blackKeyWidth and y >= startY and y < startY + math.floor(keyHeight * 0.6) then
-                msg = msg..","..key.label .. octave+1
+                print("Played note: " .. key.label .. " in octave " .. octave)
             end
         end
     end
-    rednet.broadcast(msg)
 end

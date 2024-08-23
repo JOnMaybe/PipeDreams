@@ -1,14 +1,14 @@
 -- Set the background to blue
 term.setBackgroundColor(colors.blue)
 term.clear()
-
+rednet.open("back")
 -- Get screen dimensions
 local screenWidth, screenHeight = term.getSize()
 
 -- Calculate key widths and heights based on screen size
 local whiteKeyWidth = math.floor(screenWidth / 7)  -- 7 white keys per octave
 local blackKeyWidth = math.floor(whiteKeyWidth * 0.6)
-local keyHeight = math.floor(screenHeight / 3)     -- 3 octaves
+local keyHeight = math.floor(screenHeight / 4)     -- 4 octaves
 
 -- Define the white and black keys for an octave, starting with C
 local whiteKeys = {
@@ -47,8 +47,8 @@ local function drawOctave(startY)
     end
 end
 
--- Draw three octaves, scaled to screen size
-for octave = 1, 3 do
+-- Draw four octaves, scaled to screen size
+for octave = 1, 4 do
     local startY = (octave - 1) * keyHeight + 1
     drawOctave(startY)
 end
@@ -56,15 +56,16 @@ end
 -- Handle mouse input
 while true do
     local event, button, x, y = os.pullEvent("mouse_click")
+    local msg = ""
 
-    -- Detect key press for all three octaves
-    for octave = 1, 3 do
+    -- Detect key press for all four octaves
+    for octave = 1, 4 do
         local startY = (octave - 1) * keyHeight + 1
         -- Check white keys
         for _, key in ipairs(whiteKeys) do
             local keyX = math.floor(key.xOffset * whiteKeyWidth) + 1
             if x >= keyX and x < keyX + whiteKeyWidth and y >= startY and y < startY + keyHeight then
-                print("Played note: " .. key.label .. " in octave " .. octave)
+                msg = msg..","..key.label .. octave+1
             end
         end
 

@@ -1,3 +1,4 @@
+--ChatGPT wrote most of this, not my own work
 -- Set the background to blue
 term.setBackgroundColor(colors.blue)
 term.clear()

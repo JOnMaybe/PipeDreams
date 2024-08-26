@@ -4,6 +4,7 @@ local args = {...}
 
 urls = {
     {"pipe.lua",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/pipe.lua"},
+    {"midi.lua",         "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/midi.lua"},
     {"superUpdate.lua",  "https://raw.githubusercontent.com/JOnMaybe/PipeDreams/main/superUpdate.lua"}
 
 }

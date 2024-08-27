@@ -1,43 +1,23 @@
-#chatGPT wrote this, not my own work
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import mido
-import requests
+from flask import Flask, request, jsonify
 
-class MidiHandler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length).decode('utf-8')
-        print(f"Received note: {post_data}")
-        # Respond to the request
-        self.send_response(200)
-        self.end_headers()
+app = Flask(__name__)
 
-def midi_note_to_name(note):
-    notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    octave = (note // 12) - 1
-    note_name = notes[note % 12]
-    return f"{note_name}{octave}"
+note_queue = []
 
-def send_note_to_server(note, action):
-    url = 'http://192.168.0.122:8080'  # Replace with your server IP if necessary
-    data = f"{note}:{action}"
-    requests.post(url, data=data)
+@app.route('/send_note', methods=['POST'])
+def send_note():
+    data = request.json
+    note = data.get('note')
+    if note:
+        note_queue.append(note)
+        return "Note received", 200
+    return "No note provided", 400
 
-def start_midi_server():
-    server_address = ('', 8080)  # Use an available port
-    httpd = HTTPServer(server_address, MidiHandler)
-    print('Starting MIDI HTTP server...')
-    httpd.serve_forever()
+@app.route('/get_note', methods=['GET'])
+def get_note():
+    if note_queue:
+        return jsonify(note_queue.pop(0))
+    return "", 204  # No content
 
-with mido.open_input('CASIO USB-MIDI 0') as inport:
-    for msg in inport:
-        if msg.type == 'note_on':
-            note_name = midi_note_to_name(msg.note)
-            print(f"Note on: {note_name}")
-            send_note_to_server(note_name, 'on')
-        elif msg.type == 'note_off':
-            note_name = midi_note_to_name(msg.note)
-            print(f"Note off: {note_name}")
-            send_note_to_server(note_name, 'off')
-
-start_midi_server()
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)  # Change the port if needed

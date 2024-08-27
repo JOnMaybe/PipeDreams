@@ -2,9 +2,15 @@ while true do
     local response, err = http.get("http://your.server.ip:5000/get_note")  -- Replace with your server's IP
     if response then
         local note = response.readAll()
-        if note and note ~= "" then
+        if note and note ~= "@" then
+            -- Remove surrounding quotes if present
+            note = note:gsub('^"(.*)"$', '%1')
             rednet.broadcast(note)
         end
+        if note == "@" then
+            rednet.broadcast("")
+        end
+
     else
         print("HTTP GET request failed: " .. (err or "Unknown error"))
     end

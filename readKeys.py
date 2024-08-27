@@ -47,4 +47,4 @@ with mido.open_input('CASIO USB-MIDI 0') as inport:
                 update_pressed_keys(msg, add=False)
         
         send_keys_to_server()
-        time.sleep(0.1)  # Adjust the delay as needed
+        time.sleep(0.05)  # Adjust the delay as needed

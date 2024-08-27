@@ -9,7 +9,7 @@ def midi_note_to_name(note):
     return f"{note_name}{octave}"
 
 def send_note_to_server(note_name):
-    url = "http://your.server.ip:5000/send_note"  # Replace with your server's IP
+    url = "http:localhost:5000/send_note"  # Replace with your server's IP
     data = {'note': note_name}
     try:
         response = requests.post(url, json=data)

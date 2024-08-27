@@ -1,5 +1,5 @@
 --chatgpt wrote this, not my own work
-local server_url = "http://your.server.ip:8080"
+local server_url = "192.168.0.131:8080"
 
 local playing_notes = {}
 

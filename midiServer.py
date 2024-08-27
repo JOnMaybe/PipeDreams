@@ -19,7 +19,7 @@ def midi_note_to_name(note):
     return f"{note_name}{octave}"
 
 def send_note_to_server(note, action):
-    url = 'http://localhost:8080'  # Replace with your server IP if necessary
+    url = '192.168.0.122:8080'  # Replace with your server IP if necessary
     data = f"{note}:{action}"
     requests.post(url, data=data)
 
@@ -29,7 +29,7 @@ def start_midi_server():
     print('Starting MIDI HTTP server...')
     httpd.serve_forever()
 
-with mido.open_input('Your MIDI Keyboard Name Here') as inport:
+with mido.open_input('CASIO USB-MIDI 0') as inport:
     for msg in inport:
         if msg.type == 'note_on':
             note_name = midi_note_to_name(msg.note)

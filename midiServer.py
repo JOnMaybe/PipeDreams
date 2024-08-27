@@ -19,7 +19,7 @@ def midi_note_to_name(note):
     return f"{note_name}{octave}"
 
 def send_note_to_server(note, action):
-    url = '192.168.0.122:8080'  # Replace with your server IP if necessary
+    url = 'http://192.168.0.122:8080'  # Replace with your server IP if necessary
     data = f"{note}:{action}"
     requests.post(url, data=data)
 
